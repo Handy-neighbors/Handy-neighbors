@@ -1,7 +1,9 @@
+//Here we are using the express framework for the back-end(server-side)
 var express = require('express');
 var bodyParser = require('body-parser');
 var db = require('../database-mongo/index.js');
 var app = express();
+//For these two variables below we are using this encryption model for hashing the password
 var bcrypt = require('bcrypt')
 var saltRounds = 10
 //----------------------------------------------------------
@@ -11,95 +13,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
-app.post('/service', function (req, res) {
-    var obj = {
-      clientName: req.body.clientName,
-      service: req.body.service,
-      date: req.body.date
-    }
-  db.Technitian.findOne({username:req.body.username},'username services',function(err,data){
-    console.log(data)
-   data.services.push(obj);
-    db.save(data,function(err,data){
-      if(err){
-        console.log(err)
-      }
-      console.log(data)
-      res.send(data);
-    });
-    
-  })
-  
-})
-
-
-app.post('/signin', function (req, res) {
-
-  var username = req.body.username;
-  var pass = req.body.password;
-
-  db.Technitian.findOne({username:username},function(err,data){
-    if(err){
-      console.log(err)
-    }
-    if(data){
-      bcrypt.compare(pass,data.password,function(err,isMatch){
-          if(isMatch){
-          console.log('access valid') 
-          var obj = {
-              username : data.username,
-              services : data.services,
-              valid : isMatch
-          }
-          res.send(obj)
-          }
-          else{
-          console.log('wrong username or password')
-          res.send(isMatch)
-          }
-        })
-    } else {console.log('username not existed')
-            res.send(false)}
-  });
-  
-});
-
-app.post('/signup', function (req, res) {
-  var data=req.body;
-bcrypt.hash(data.password,saltRounds,function(err,hash){
-  if(err){
-    console.log(err)
-  }if(data.username==="" || data.password.length < 8 || data.phonenumber.length <12){
-    res.send("Invalid Input")
-  }else{
-  db.save({
-      username:data.username,
-      password:hash,
-      phonenumber:data.phonenumber,
-      longitude: data.longitude,
-      laltitude: data.laltitude,
-      distance: 0
-    },function(err,data){
-      if(err){
-        console.log(err)
-      }
-      res.send(data)
-    })
-    }
-  })
-
-
-});
-app.get('/signup', function (req, res) {
-  var data=req.body;
-
-  
-  console.log('wseu')
-});
-
-
+//Here we are recieving the post request from the client-side that contains the user's location.
 app.post('/', function (req, res) {
 
+//Now we are making this function below to specify the distance in KM between the user's location
+//and the technitian's location depending on the radius of the earth and the longitude and laltitude.
     function DistanceInKm(lat1,lon1,lat2,lon2) {
         var radius = 6371; // Radius of the earth in km
         var Laltitude = deg2rad(lat2-lat1);  // deg2rad below
@@ -117,6 +35,11 @@ app.post('/', function (req, res) {
     function deg2rad(deg) {
       return deg * (Math.PI/180)
     }
+
+
+
+    //Here we are finding the technitians with the nearest distance for the user and sorting them depending on the nearest 
+    //technitian,then we are going to response an array contains the nearest five technitians for the client-side. 
     var user=req.body;
 
     db.Technitian.find({},'username longitude laltitude distance phonenumber',function(err,techs){
@@ -147,6 +70,109 @@ app.post('/', function (req, res) {
   })
 
 });
+
+
+//Here we are recieving a post request from the client-side for the sign-up process that the technitian typed.
+app.post('/signup', function (req, res) {
+  var data=req.body;
+  //Here we are hashing the password using the bcrypt model that we required above using saltRounds,
+  //and we are adding some conditions to make it logical process.
+bcrypt.hash(data.password,saltRounds,function(err,hash){
+  if(err){
+    console.log(err)
+  }if(data.username === "" || data.password.length < 8 || data.phonenumber.length <12){
+    res.send("Invalid Input")
+  }else{
+    //Now we are saving the the information for the technitian in the database depending on the schema's data-types,
+    //and we going to specify the distance with zero to compare it with current location for the user.
+  db.save({
+      username:data.username,
+      password:hash,
+      phonenumber:data.phonenumber,
+      longitude: data.longitude,
+      laltitude: data.laltitude,
+      distance: 0
+    },function(err,data){
+      if(err){
+        console.log(err)
+      }
+      res.send(data)
+    })
+    }
+  })
+
+
+});
+
+app.get('/signup', function (req, res) {
+  var data=req.body;
+
+  
+  console.log('wseu')
+});
+
+
+
+
+//Here we are recieving a post request from the client-side for the sign-in process.
+app.post('/signin', function (req, res) {
+
+  var username = req.body.username;
+  var pass = req.body.password;
+//Now we are going to recieve the technitian's username and the hashed password and find the username in the
+//database and compare the hashed password using bcrypt model then we are going to response the right answer.
+  db.Technitian.findOne({username:username},function(err,data){
+    if(err){
+      console.log(err)
+    }
+    if(data){
+      bcrypt.compare(pass,data.password,function(err,isMatch){
+          if(isMatch){
+          console.log('access valid') 
+          var obj = {
+              username : data.username,
+              services : data.services,
+              valid : isMatch
+          }
+          res.send(obj)
+          }
+          else{
+          console.log('wrong username or password')
+          res.send(isMatch)
+          }
+        })
+    } else {console.log('username not existed')
+            res.send(false)}
+  });
+  
+});
+
+
+
+
+
+//Here we are recieving a post request from the client-side for the services that the technitian entered them
+//in his own profile to be rendered in his profile page and saved in the database as a object inside the services array.
+app.post('/service', function (req, res) {
+    var obj = {
+      clientName: req.body.clientName,
+      service: req.body.service,
+      date: req.body.date
+    }
+  db.Technitian.findOne({username:req.body.username},'username services',function(err,data){
+    console.log(data)
+   data.services.push(obj);
+    db.save(data,function(err,data){
+      if(err){
+        console.log(err)
+      }
+      console.log(data)
+      res.send(data);
+    });
+    
+  })
+  
+})
 
 
 app.listen(process.env.PORT || 3001, function() {

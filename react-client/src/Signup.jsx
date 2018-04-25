@@ -15,7 +15,7 @@ class Signup extends React.Component {
       password: '',
       longitude: 0,
       laltitude: 0,
-      mssg:''
+      mssg: ''
 
     }
     this.handleChangesU = this.handleChangesU.bind(this);
@@ -25,6 +25,8 @@ class Signup extends React.Component {
     this.handleChangesLongitude = this.handleChangesLongitude.bind(this)
     this.handleChangesLaltitude = this.handleChangesLaltitude.bind(this)
     this.setLngLat = this.setLngLat.bind(this);
+    // this.wrong = this.wrong.bind(this);
+
 
   }
 
@@ -64,6 +66,9 @@ class Signup extends React.Component {
     
   }
 
+// wrong(){
+//           return <div style={{border: 'solid', borderColor:'black', textAlign:'center', background:'red'}}><h4>{this.state.mssg}</h4></div>
+//         }
 
    handleSubmit(event) {
     $.ajax({
@@ -78,8 +83,14 @@ class Signup extends React.Component {
 
       }, 
       success: (data) => {
+        if(data !== 'Invalid Input'){
         this.setState({ redirect: true })
+      } else{
+        this.setState({mssg : data})
+        
+      }
         console.log('success', data)
+      
       },
       error: (err) => {
         console.log('err', err);
@@ -116,8 +127,8 @@ class Signup extends React.Component {
             <input className="form-control" id="longitude" placeholder="longitude" name="longitude" value={this.state.longitude} onChange={this.handleChangesLongitude}/>
             <input className="form-control" id="laltitude" placeholder="laltitude" name="laltitude" value={this.state.laltitude} onChange={this.handleChangesLaltitude}/>
          
+            <div style={{border: 'solid',  textAlign:'center', background:'red', fontSize:'30px', color:'white', opacity: '0.8', marginTop:'10px'}}>{this.state.mssg}</div>
             </div>
-            <p style={{border: 'solid', borderColor:'black'}}>{this.state.mssg}</p>
           <button type="submit" className="btn btn-warning btn-block btn-lg" style={{color:'black', marginBottom: '10px'}}>Submit</button>
         </form>
         <OurMap setLngLat={this.setLngLat} longitude={this.state.longitude} laltitude={this.state.laltitude}/>

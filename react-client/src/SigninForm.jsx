@@ -9,7 +9,8 @@ class SigninForm extends React.Component {
     super(props);
     this.state = { 
       username: '',
-      password: ''
+      password: '',
+      mssg:''
 
     }
     this.handleChangesU = this.handleChangesU.bind(this);
@@ -44,6 +45,7 @@ class SigninForm extends React.Component {
           this.props.setServices(data.services)
           this.props.toggle()
         } else{
+          this.setState({mssg: 'Invalid username or password'})
           console.log('wrong')
         }
       },
@@ -68,6 +70,7 @@ class SigninForm extends React.Component {
             <label >Password:</label>
             <input type="password" className="form-control" id="pwd" placeholder="Enter password" name="pwd" value={this.state.password} onChange={this.handleChangesP}/>
           </div>
+          <div style={{border: 'solid',  textAlign:'center', background:'red', fontSize:'30px', color:'white', opacity: '0.8', marginBottom:'10px'}}>{this.state.mssg}</div>
           <button type="submit" className="btn btn-warning btn-lg" style={{color:'black'}} >Submit</button>
         </form>
        
