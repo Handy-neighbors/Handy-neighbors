@@ -4,7 +4,7 @@ import $ from 'jquery';
 import {Redirect} from "react-router-dom";
 import OurMap from './OurMap.jsx';
 import { Radio } from 'react-bootstrap';
-
+import Toggle from 'react-bootstrap-toggle';
 //Are you watching closely?
 //In this component we register a new mechanic, we will get the location from OurMap component, get the other information from the form, if every thing is fine, we will redirect him to Signin.
 
@@ -20,9 +20,10 @@ class Signup extends React.Component {
       laltitude: 0,
       email: '',
       category: true,
-      mssg: ''
+      mssg: '',
+      toggleActive: false
     }
-
+    this.onToggle = this.onToggle.bind(this);
     this.handleChangesU = this.handleChangesU.bind(this);
     this.handleChangesP = this.handleChangesP.bind(this);
     this.handleChangesPh = this.handleChangesPh.bind(this);
@@ -33,7 +34,11 @@ class Signup extends React.Component {
     this.handleChangesEmail = this.handleChangesEmail.bind(this);
     this.handleChangesCategory = this.handleChangesCategory.bind(this);
   }
+   onToggle() {
 
+    this.setState({ toggleActive: !this.state.toggleActive });
+    console.log(this.state.toggleActive)
+  }
   //this function will be passed to the child component OurMap, so we can call it there and pass longitude and laltitude with it
   setLngLat(lng, lat){
     this.setState({longitude: lng,
@@ -77,8 +82,9 @@ class Signup extends React.Component {
   }
 
   handleChangesCategory(event) {
-    this.setState({category: !this.state.category})
     console.log(this.state.category)
+    this.setState({category: event.target.value})
+   
     
   }
 
@@ -148,7 +154,14 @@ class Signup extends React.Component {
 
         <label >Are you a Mech or not ?</label> 
         <div className="form-group">
-          <input id='category' className="form-control" type="checkbox"  data-toggle="toggle" data-on="I'm a<br>Mechanic" name="category" value={this.state.category} onChange={this.handleChangesCategory} data-off="I'm Looking<br>for Mechanic" data-onstyle="primary" data-offstyle="success" data-style="slow"/>
+           <Toggle
+          onClick={this.onToggle}
+          on={<h2>ON</h2>}
+          off={<h2>OFF</h2>}
+          size="xs"
+          offstyle="danger"
+          active={this.state.toggleActive}
+        />
         </div> 
 
         <div className="form-group">
