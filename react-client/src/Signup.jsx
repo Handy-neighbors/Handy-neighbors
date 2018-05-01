@@ -77,7 +77,8 @@ class Signup extends React.Component {
   }
 
   handleChangesCategory(event) {
-    this.setState({category: !this.state.category})
+    var that =this
+    this.setState({category: event.target.value})
     console.log(this.state.category)
     
   }
@@ -148,7 +149,7 @@ class Signup extends React.Component {
 
         <label >Are you a Mech or not ?</label> 
         <div className="form-group">
-          <input id='category' className="form-control" type="checkbox"  data-toggle="toggle" data-on="I'm a<br>Mechanic" name="category" value={this.state.category} onChange={this.handleChangesCategory} data-off="I'm Looking<br>for Mechanic" data-onstyle="primary" data-offstyle="success" data-style="slow"/>
+          <input id='category' className="form-control" type="checkbox"  data-toggle="toggle" data-on="I'm a<br>Mechanic" name="category" value={this.state.category} onClick={this.handleChangesCategory} data-off="I'm Looking<br>for Mechanic" data-onstyle="primary" data-offstyle="success" data-style="slow"/>
         </div> 
 
         <div className="form-group">
