@@ -93,7 +93,7 @@ class Home extends React.Component {
               </div>
               <div style={{margin: '15px'}}>
               <h4>Choose a mechanic:</h4>
-              <MechList mechs={this.state.mechs} longitude={this.state.longitude} laltitude={this.state.laltitude}/>
+              <MechList toggle={this.props.toggle} username={this.props.username} setUsername={this.props.setUsername} v = {this.props.v} mechs={this.state.mechs} longitude={this.state.longitude} laltitude={this.state.laltitude}/>
               </div>
               <OurMap setLngLat={this.setLngLat} longitude={this.state.longitude} laltitude={this.state.laltitude}/>
               </div>
