@@ -24,6 +24,7 @@ class Main extends React.Component {
     }
     this.toggle = this.toggle.bind(this)
     this.MySignin = this.MySignin.bind(this)
+    this.MyHome = this.MyHome.bind(this)
     this.setUsername = this.setUsername.bind(this)
     this.setServices = this.setServices.bind(this)
   }
@@ -50,6 +51,14 @@ class Main extends React.Component {
         />
       );
     }
+    ///passing user to home 
+    MyHome(props){
+      return (
+        <Home
+          toggle={this.toggle} v={this.state.v} username={this.state.username} setUsername={this.setUsername}
+        />
+      );
+    }
 //React router resorce: https://reacttraining.com/react-router/core/guides/philosophy
 
 //HashRouter is used here so fixed urls in the browser will take you to the wanted page and more importantly to make redirecting possible
@@ -70,7 +79,7 @@ class Main extends React.Component {
           </ul>
         </div>
       </nav>
-      <Route path="/home" component={Home} />
+      <Route path="/home" component={this.MyHome} />
       <Route path="/signin" render={this.MySignin} />
       <Route exact path="/" component={Intro} />
       <Route path="/signup" component={Signup} />

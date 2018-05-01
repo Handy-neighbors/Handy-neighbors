@@ -98,7 +98,7 @@ bcrypt.hash(data.password,saltRounds,function(err,hash){
           laltitude: data.laltitude,
           distance: 0,
           email:req.body.email,
-          category: date.category
+          category: data.category
         },function(err,data){
           if(err){
             console.log(err)
