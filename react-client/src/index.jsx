@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
@@ -8,6 +7,7 @@ import Home from './Home.jsx';
 import Intro from './Intro.jsx';
 import { HashRouter } from 'react-router-dom'
 import { BrowserRouter as Router, Route, Redirect, Link } from "react-router-dom";
+import './styles/styles.scss';
 
   // Welcome to our root component! Here we used react router to make it possible for the user to navigate 
   // the different views of our project.

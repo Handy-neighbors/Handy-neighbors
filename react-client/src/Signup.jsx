@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import {Redirect} from "react-router-dom";
 import OurMap from './OurMap.jsx';
+import { Radio } from 'react-bootstrap';
 
 //Are you watching closely?
 //In this component we register a new mechanic, we will get the location from OurMap component, get the other information from the form, if every thing is fine, we will redirect him to Signin.
@@ -18,6 +19,7 @@ class Signup extends React.Component {
       longitude: 0,
       laltitude: 0,
       email: '',
+      category: true,
       mssg: ''
     }
 
@@ -29,6 +31,7 @@ class Signup extends React.Component {
     this.handleChangesLaltitude = this.handleChangesLaltitude.bind(this)
     this.setLngLat = this.setLngLat.bind(this);
     this.handleChangesEmail = this.handleChangesEmail.bind(this);
+    this.handleChangesCategory = this.handleChangesCategory.bind(this);
   }
 
   //this function will be passed to the child component OurMap, so we can call it there and pass longitude and laltitude with it
@@ -73,6 +76,12 @@ class Signup extends React.Component {
     
   }
 
+  handleChangesCategory(event) {
+    this.setState({category: !this.state.category})
+    console.log(this.state.category)
+    
+  }
+
 //sending all the mech information to the server and checking input validity, if valid we will redirect him to the sign in page, by changing the value of redirect to true and the rest is hapening below, check the first few lines in the render function.
   handleSubmit(event) {
     $.ajax({
@@ -84,9 +93,10 @@ class Signup extends React.Component {
         password: this.state.password,
         phonenumber: this.state.phonenumber,
         longitude: this.state.longitude,
-        laltitude: this.state.laltitude
-
+        laltitude: this.state.laltitude,
+        category: this.state.category
       }, 
+
       success: (data) => {
         if(data === 'exists'){
           this.setState({mssg : "This username is already used"})
@@ -129,18 +139,23 @@ class Signup extends React.Component {
           <label >Phone number:</label>
           <input className="form-control" id="phoneNumber" placeholder="Enter Phone number" name="phoneNumber" value={this.state.phonenumber} onChange={this.handleChangesPh}/>
           * Please enter a valid phone number
-        </div> 
+        </div>
         <div className="form-group">
           <label >Password:</label>
           <input type="password" className="form-control" id="pwd" placeholder="Enter password" name="pwd" value={this.state.password} onChange={this.handleChangesP}/>
           * At least 8 characters
         </div>
+
+        <label >Are you a Mech or not ?</label> 
+        <div className="form-group">
+          <input id='category' className="form-control" type="checkbox"  data-toggle="toggle" data-on="I'm a<br>Mechanic" name="category" value={this.state.category} onChange={this.handleChangesCategory} data-off="I'm Looking<br>for Mechanic" data-onstyle="primary" data-offstyle="success" data-style="slow"/>
+        </div> 
+
         <div className="form-group">
           <label>Location:</label>
           <p>Don't worry! we will fill this one for you :)</p>
           <input className="form-control" id="longitude" placeholder="longitude" name="longitude" value={this.state.longitude} onChange={this.handleChangesLongitude}/>
           <input className="form-control" id="laltitude" placeholder="laltitude" name="laltitude" value={this.state.laltitude} onChange={this.handleChangesLaltitude}/>
-
           <div style={{border: 'solid',  textAlign:'center', background:'red', fontSize:'30px', color:'white', opacity: '0.8', marginTop:'10px'}}>{this.state.mssg}</div>
         </div>
         <button type="submit" className="btn btn-warning btn-block btn-lg" style={{color:'black', marginBottom: '10px'}}>Submit</button>
