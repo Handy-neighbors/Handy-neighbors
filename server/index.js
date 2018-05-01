@@ -97,7 +97,8 @@ bcrypt.hash(data.password,saltRounds,function(err,hash){
           longitude: data.longitude,
           laltitude: data.laltitude,
           distance: 0,
-          email:req.body.email
+          email:req.body.email,
+          category: date.category
         },function(err,data){
           if(err){
             console.log(err)
@@ -176,7 +177,7 @@ app.post('/service', function (req, res) {
 })
 
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Our app is running on port ${ PORT }`);
 });
