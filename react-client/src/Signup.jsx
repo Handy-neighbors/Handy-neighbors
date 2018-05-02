@@ -156,10 +156,11 @@ class Signup extends React.Component {
         <div className="form-group">
            <Toggle
           onClick={this.onToggle}
-          on={<h2>ON</h2>}
-          off={<h2>OFF</h2>}
-          size="xs"
-          offstyle="danger"
+          on={<h5>Not Mechanic</h5>}
+          off={<h5>Mechanic</h5>}
+          size="md"
+          onstyle="info"
+          offstyle="success"
           active={this.state.toggleActive}
         />
         </div> 
