@@ -14,13 +14,32 @@ class Mechanic extends React.Component{
     this.setState({rating: nextValue});
     $.ajax({
       type : 'PUT',
-      url: '/mechanic',
+      url: '/rateUpdate',
       data: {
       rating:that.state.rating,
       username:that.props.mech.username
       }, 
       success: (data) => {
         
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+    event.preventDefault();
+  }
+  onStarChange(data) {
+      var that=this
+    $.ajax({
+      type : 'Post',
+      url: '/rating',
+      data: {
+      rating:that.state.rating,
+      username:that.props.mech.username
+      }, 
+
+      success: (data) => {
+        console.log(data)
       },
       error: (err) => {
         console.log('err', err);
