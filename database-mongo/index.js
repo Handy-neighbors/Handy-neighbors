@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var databaseConnect = 'mongodb://localhost/test'
-mongoose.connect(databaseConnect);
+mongoose.connect(databaseConnect, { useMongoClient: true });
 
 var db = mongoose.connection;
 
@@ -25,7 +25,8 @@ db.once('open', function() {
     laltitude:Number,
     distance:Number,
     email:String,
-    category: Boolean,
+    isMechanic: Boolean,
+    rating: [Number],
     //For this datatype below is an Array of services that will have a list for the 
     //technitian that he will fill them in his own profile,and these services will be 
     //rendered in technitian profile after saving process.
@@ -33,7 +34,7 @@ db.once('open', function() {
   })
 
 
-  var Technitian = mongoose.model('Tecnitian',techSchema)//this is a model for the technitian
+  var Technitian = mongoose.model('Tecnitian', techSchema)//this is a model for the technitian
    
   //Here we are making a save function that will be called every time when a new technitian make 
   //a signup process and for saving the services that the technitian add them in 

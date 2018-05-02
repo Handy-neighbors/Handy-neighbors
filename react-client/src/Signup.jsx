@@ -19,9 +19,8 @@ class Signup extends React.Component {
       longitude: 0,
       laltitude: 0,
       email: '',
-      category: true,
+      isMechanic: false,
       mssg: '',
-      toggleActive: false
     }
     this.onToggle = this.onToggle.bind(this);
     this.handleChangesU = this.handleChangesU.bind(this);
@@ -32,12 +31,11 @@ class Signup extends React.Component {
     this.handleChangesLaltitude = this.handleChangesLaltitude.bind(this)
     this.setLngLat = this.setLngLat.bind(this);
     this.handleChangesEmail = this.handleChangesEmail.bind(this);
-    this.handleChangesCategory = this.handleChangesCategory.bind(this);
+    // this.handleChangesMechanic = this.handleChangesMechanic.bind(this);
   }
    onToggle() {
 
-    this.setState({ toggleActive: !this.state.toggleActive });
-    console.log(this.state.toggleActive)
+    this.setState({ isMechanic: !this.state.isMechanic });
   }
   //this function will be passed to the child component OurMap, so we can call it there and pass longitude and laltitude with it
   setLngLat(lng, lat){
@@ -81,12 +79,12 @@ class Signup extends React.Component {
     
   }
 
-  handleChangesCategory(event) {
-    console.log(this.state.category)
-    this.setState({category: event.target.value})
+  // handleChangesMechanic(event) {
+  //   this.setState({isMechanic: event.target.value})
+  //   console.log(this.state.isMechanic)
    
     
-  }
+  // }
 
 //sending all the mech information to the server and checking input validity, if valid we will redirect him to the sign in page, by changing the value of redirect to true and the rest is hapening below, check the first few lines in the render function.
   handleSubmit(event) {
@@ -100,7 +98,7 @@ class Signup extends React.Component {
         phonenumber: this.state.phonenumber,
         longitude: this.state.longitude,
         laltitude: this.state.laltitude,
-        category: this.state.category
+        isMechanic: this.state.isMechanic
       }, 
 
       success: (data) => {
@@ -156,12 +154,12 @@ class Signup extends React.Component {
         <div className="form-group">
            <Toggle
           onClick={this.onToggle}
-          on={<h5>Not Mechanic</h5>}
-          off={<h5>Mechanic</h5>}
+          on={<h5>Mechanic</h5>}
+          off={<h5>Not Mechanic</h5>}
           size="md"
-          onstyle="info"
-          offstyle="success"
-          active={this.state.toggleActive}
+          onstyle="success"
+          offstyle="info"
+          active={this.state.isMechanic}
         />
         </div> 
 

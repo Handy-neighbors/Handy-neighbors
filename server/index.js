@@ -60,7 +60,7 @@ app.post('/', function (req, res) {
 
     var arr=[];
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < techs.length; i++) {
       arr.push(techs[i])
     }
 
@@ -98,7 +98,8 @@ bcrypt.hash(data.password,saltRounds,function(err,hash){
           laltitude: data.laltitude,
           distance: 0,
           email:req.body.email,
-          category: data.category
+          isMechanic: data.isMechanic,
+          rating: 5
         },function(err,data){
           if(err){
             console.log(err)
@@ -174,6 +175,27 @@ app.post('/service', function (req, res) {
     
   })
   
+});
+
+app.put('/rateUpdate', function (req, res){
+  db.Technitian.findOneAndUpdate({username: req.body.username}, {$push: {rating: req.body.rating}}, function (err, data){
+    if (err) {
+      console.log(err)
+    } else {
+    res.send("Done!")
+    }
+  });
+});
+
+app.post('/rating', function(req, res){
+  db.Technitian.findOne({username: req.body.username}, function(err, data){
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(data.rating)
+      res.send(data.rating)
+    }
+  })
 })
 
 
