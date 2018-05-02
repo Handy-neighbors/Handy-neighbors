@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import {Redirect} from "react-router-dom";
 import OurMap from './OurMap.jsx';
-
+import { Radio } from 'react-bootstrap';
+import Toggle from 'react-bootstrap-toggle';
 //Are you watching closely?
 //In this component we register a new mechanic, we will get the location from OurMap component, get the other information from the form, if every thing is fine, we will redirect him to Signin.
 
@@ -18,9 +19,10 @@ class Signup extends React.Component {
       longitude: 0,
       laltitude: 0,
       email: '',
-      mssg: ''
+      isMechanic: false,
+      mssg: '',
     }
-
+    this.onToggle = this.onToggle.bind(this);
     this.handleChangesU = this.handleChangesU.bind(this);
     this.handleChangesP = this.handleChangesP.bind(this);
     this.handleChangesPh = this.handleChangesPh.bind(this);
@@ -29,8 +31,12 @@ class Signup extends React.Component {
     this.handleChangesLaltitude = this.handleChangesLaltitude.bind(this)
     this.setLngLat = this.setLngLat.bind(this);
     this.handleChangesEmail = this.handleChangesEmail.bind(this);
+    // this.handleChangesMechanic = this.handleChangesMechanic.bind(this);
   }
+   onToggle() {
 
+    this.setState({ isMechanic: !this.state.isMechanic });
+  }
   //this function will be passed to the child component OurMap, so we can call it there and pass longitude and laltitude with it
   setLngLat(lng, lat){
     this.setState({longitude: lng,
@@ -73,6 +79,13 @@ class Signup extends React.Component {
     
   }
 
+  // handleChangesMechanic(event) {
+  //   this.setState({isMechanic: event.target.value})
+  //   console.log(this.state.isMechanic)
+   
+    
+  // }
+
 //sending all the mech information to the server and checking input validity, if valid we will redirect him to the sign in page, by changing the value of redirect to true and the rest is hapening below, check the first few lines in the render function.
   handleSubmit(event) {
     $.ajax({
@@ -84,9 +97,10 @@ class Signup extends React.Component {
         password: this.state.password,
         phonenumber: this.state.phonenumber,
         longitude: this.state.longitude,
-        laltitude: this.state.laltitude
-
+        laltitude: this.state.laltitude,
+        isMechanic: this.state.isMechanic
       }, 
+
       success: (data) => {
         if(data === 'exists'){
           this.setState({mssg : "This username is already used"})
@@ -129,18 +143,31 @@ class Signup extends React.Component {
           <label >Phone number:</label>
           <input className="form-control" id="phoneNumber" placeholder="Enter Phone number" name="phoneNumber" value={this.state.phonenumber} onChange={this.handleChangesPh}/>
           * Please enter a valid phone number
-        </div> 
+        </div>
         <div className="form-group">
           <label >Password:</label>
           <input type="password" className="form-control" id="pwd" placeholder="Enter password" name="pwd" value={this.state.password} onChange={this.handleChangesP}/>
           * At least 8 characters
         </div>
+
+        <label >Are you a Mech or not ?</label> 
+        <div className="form-group">
+           <Toggle
+          onClick={this.onToggle}
+          on={<h5>Mechanic</h5>}
+          off={<h5>Not Mechanic</h5>}
+          size="md"
+          onstyle="success"
+          offstyle="info"
+          active={this.state.isMechanic}
+        />
+        </div> 
+
         <div className="form-group">
           <label>Location:</label>
           <p>Don't worry! we will fill this one for you :)</p>
           <input className="form-control" id="longitude" placeholder="longitude" name="longitude" value={this.state.longitude} onChange={this.handleChangesLongitude}/>
           <input className="form-control" id="laltitude" placeholder="laltitude" name="laltitude" value={this.state.laltitude} onChange={this.handleChangesLaltitude}/>
-
           <div style={{border: 'solid',  textAlign:'center', background:'red', fontSize:'30px', color:'white', opacity: '0.8', marginTop:'10px'}}>{this.state.mssg}</div>
         </div>
         <button type="submit" className="btn btn-warning btn-block btn-lg" style={{color:'black', marginBottom: '10px'}}>Submit</button>
