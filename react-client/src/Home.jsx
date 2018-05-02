@@ -13,8 +13,8 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      longitude: 0,
-      laltitude: 0,
+      longitude: 35.8375629,
+      laltitude: 31.9867353,
       mechs: []
     }
    this.handleChangesLongitude = this.handleChangesLongitude.bind(this)
@@ -92,7 +92,7 @@ class Home extends React.Component {
               </div>
               <div style={{margin: '15px'}}>
               <h4>Choose a mechanic:</h4>
-              <MechList toggle={this.props.toggle} username={this.props.username} setUsername={this.props.setUsername} v = {this.props.v} mechs={this.state.mechs} longitude={this.state.longitude} laltitude={this.state.laltitude}/>
+              <MechList className='container' toggle={this.props.toggle} username={this.props.username} setUsername={this.props.setUsername} v = {this.props.v} mechs={this.state.mechs} longitude={this.state.longitude} laltitude={this.state.laltitude}/>
               </div>
               <OurMap setLngLat={this.setLngLat} longitude={this.state.longitude} laltitude={this.state.laltitude}/>
               </div>
