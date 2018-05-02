@@ -63,7 +63,9 @@ class Main extends React.Component {
 
 //HashRouter is used here so fixed urls in the browser will take you to the wanted page and more importantly to make redirecting possible
   render(){
-  return (<Router >
+    if (this.state.v === false){
+      return (
+    <Router >
   <HashRouter>
     <div >
       <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -71,9 +73,7 @@ class Main extends React.Component {
           <div className="navbar-header">
             <a className="navbar-brand " href="#" style={{color:'#E9AB17'}}>Handy Neighbors</a>
           </div>
-          <ul className="nav navbar-nav">
-            <li><Link to="/">Intro</Link></li>
-            <li><Link to="/home">Home</Link></li>
+          <ul className="nav navbar-nav nav pull-right">
             <li><Link to="/signin" >Signin</Link></li>
             <li><Link to="/signup">Signup</Link></li>
           </ul>
@@ -84,6 +84,32 @@ class Main extends React.Component {
       <Route exact path="/" component={Intro} />
       <Route path="/signup" component={Signup} />
     
+    </div>
+    </HashRouter>
+  </Router>
+  
+)
+    } else if (this.state.v === true)
+
+  return (
+    <Router >
+  <HashRouter>
+    <div >
+      <nav className="navbar navbar-inverse navbar-fixed-top">
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <a className="navbar-brand " href="#" style={{color:'#E9AB17'}}>Handy Neighbors</a>
+          </div>
+          <ul className="nav navbar-nav  pull-right">
+            <li><Link to="/">Intro</Link></li>
+          </ul>
+          <ul className="nav navbar-nav">
+            <li><Link to="/home">Home</Link></li>
+            </ul>
+        </div>
+      </nav>
+      <Route path="/home" component={this.MyHome} />
+      <Route exact path="/" component={Intro} />    
     </div>
     </HashRouter>
   </Router>
