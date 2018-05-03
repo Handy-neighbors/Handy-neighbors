@@ -16,10 +16,11 @@ class Signup extends React.Component {
       username: '',
       phonenumber: +962,
       password: '',
+      rating:[],
+      avgRating:0,
       longitude: 0,
       laltitude: 0,
       email: '',
-      isMechanic: false,
       mssg: '',
     }
     this.onToggle = this.onToggle.bind(this);
@@ -98,7 +99,8 @@ class Signup extends React.Component {
         phonenumber: this.state.phonenumber,
         longitude: this.state.longitude,
         laltitude: this.state.laltitude,
-        isMechanic: this.state.isMechanic
+         rating:[],
+      avgRating:0,
       }, 
 
       success: (data) => {
@@ -149,19 +151,6 @@ class Signup extends React.Component {
           <input type="password" className="form-control" id="pwd" placeholder="Enter password" name="pwd" value={this.state.password} onChange={this.handleChangesP}/>
           * At least 8 characters
         </div>
-
-        <label >Are you a Mech or not ?</label> 
-        <div className="form-group">
-           <Toggle
-          onClick={this.onToggle}
-          on={<h5>Mechanic</h5>}
-          off={<h5>Not Mechanic</h5>}
-          size="md"
-          onstyle="success"
-          offstyle="info"
-          active={this.state.isMechanic}
-        />
-        </div> 
 
         <div className="form-group">
           <label>Location:</label>
