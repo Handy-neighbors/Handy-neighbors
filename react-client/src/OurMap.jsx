@@ -14,11 +14,14 @@ class OurMap extends Component {
       showingInfoWindow: false,
 
       activeMarker: {},
-      Place: {}
+      Place: {},
+      position:{}
     }
     // binding the getLoc method to "this"
     this.getLoc = this.getLoc.bind(this)
-    this.mapclick = this.mapclick.bind(this)
+    this.mapclick = this.mapclick.bind(this);
+    // this.state.lat = this.state.lat.bind(this)
+    // this.state.lng = this.state.lng.bind(this)
   }
 
 
@@ -70,8 +73,11 @@ onMarkerClick(props, marker, e){
   lat:31.67,
   lng:31.5465
 })
-
-console.log(event.google.maps.LatLng);
+this.setState({
+  lat:event.google.maps.LatLng,
+   lng:event.google.maps.LatLng
+})
+console.log(event.google.maps.LatLng;
 console.log(event.google.maps.LatLng);
  }
   render() {
@@ -82,12 +88,13 @@ console.log(event.google.maps.LatLng);
           {this.getLoc()// calling getLoc here will get your location once you open the app
           }   
 
-            <Map style={{width:"60%",height:"30%"}} google={this.props.google} zoom={7}
+            <Map style={{width:"60%",height:"30%"}} google={this.props.google} zoom={10}
+
             //the map component which is made thanks to google maps react library 
                 initialCenter={{  lat:31.963158 ,lng:35.930359}} 
                 onClick={this.mapclick}>
 
-                <Marker position={{lat:this.props.laltitude,lng:this.props.longitude}}
+                <Marker position={{lat:this.state.lat,lng:this.state.lng}}
                 // a marker on the map that will show you your current location
                   onClick={this.onMarkerClick} name={"Your locatoin"}
                    />
