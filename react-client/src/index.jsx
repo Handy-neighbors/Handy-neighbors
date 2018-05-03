@@ -98,10 +98,10 @@ class Main extends React.Component {
             <a className="navbar-brand " href="#" style={{color:'#E9AB17'}}>Handy Neighbors</a>
           </div>
           <ul className="nav navbar-nav nav pull-right">
-            <li><Link to="/signin" >Signinas Mechanic</Link></li>
-            <li><Link to="/userSignin" >Signin</Link></li>
-            <li><Link to="/signup">Signup as Mechanic</Link></li>
-             <li><Link to="/userSignup">Signup</Link></li>
+            <li><Link to="/signin" >Sign In as Mechanic</Link></li>
+            <li><Link to="/signup">Sign Up as Mechanic</Link></li>
+            <li><Link to="/userSignin" >Sign In</Link></li>
+             <li><Link to="/userSignup">Sign Up</Link></li>
           </ul>
         </div>
       </nav>

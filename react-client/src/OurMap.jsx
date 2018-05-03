@@ -92,7 +92,7 @@ onMapClicks (props, marker, e){
        {this.getLoc()// calling getLoc here will get your location once you open the app
           }   
 
-            <Map id='#map' style={{width:"35%",height:"40%", margin: "0px 0px 0px 53px"}} google={this.props.google} zoom={7}
+            <Map id='#map' style={{width:"35%",height:"40%", margin: "0px 0px 0px -15px"}} google={this.props.google} zoom={7}
 
             //the map component which is made thanks to google maps react library 
 
