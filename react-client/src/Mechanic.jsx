@@ -12,12 +12,14 @@ class Mechanic extends React.Component{
   onStarClick(nextValue, prevValue, name) {
     var that=this
     this.setState({rating: nextValue});
+
     $.ajax({
       type : 'PUT',
       url: '/rateUpdate',
       data: {
       rating:that.state.rating,
-      username:that.props.mech.username
+      username:that.props.username,
+      techname:that.props.mech.username
       }, 
       success: (data) => {
         
@@ -29,13 +31,16 @@ class Mechanic extends React.Component{
     event.preventDefault();
   }
   onStarChange(data) {
+    console.log("hi")
       var that=this
     $.ajax({
-      type : 'Post',
+      type : 'POST',
       url: '/rating',
       data: {
       rating:that.state.rating,
-      username:that.props.mech.username
+      username:that.props.username,
+      techname:that.props.mech.username
+
       }, 
 
       success: (data) => {
@@ -66,6 +71,7 @@ class Mechanic extends React.Component{
           starCount={5}
           value={rating}
           onStarClick={this.onStarClick.bind(this)}
+         
         />
       </div>
                 </li>

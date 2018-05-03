@@ -150,7 +150,35 @@ app.post('/signin', function (req, res) {
   
 });
 
+app.post('/userSignin', function (req, res) {
 
+  var username = req.body.username;
+  var pass = req.body.password;
+//Now we are going to recieve the technitian's username and the hashed password and find the username in the
+//database and compare the hashed password using bcrypt model then we are going to response the right answer.
+  db.Users.findOne({username:username},function(err,data){
+    if(err){
+      console.log(err)
+    }
+    if(data){
+      bcrypt.compare(pass,data.password,function(err,isMatch){
+          if(isMatch){
+          console.log('access valid') 
+          var obj = {
+              username : data.username
+          }
+          res.send(obj)
+          }
+          else{
+          console.log('wrong username or password')
+          res.send(isMatch)
+          }
+        })
+    } else {console.log('username not existed')
+            res.send(false)}
+  });
+  
+});
 
 
 
@@ -162,6 +190,7 @@ app.post('/service', function (req, res) {
       service: req.body.service,
       date: req.body.date
     }
+    console.log(req.body.username)
   db.Technitian.findOne({username:req.body.username},'username services',function(err,data){
     console.log(data)
    data.services.unshift(obj);
@@ -186,16 +215,56 @@ app.put('/rateUpdate', function (req, res){
     }
   });
 });
+app.post('/userSignup', function(req, res){
 
-app.post('/rating', function(req, res){
-  db.Technitian.findOne({username: req.body.username}, function(err, data){
-    if (err) {
-      console.log(err)
-    } else {
-      console.log(data.rating)
-      res.send(data.rating)
-    }
+ var data=req.body;
+ console.log(data);
+  //Here we are hashing the password using the bcrypt model that we required above using saltRounds,
+  //and we are adding some conditions to make it logical process.
+bcrypt.hash(data.password,saltRounds,function(err,hash){
+  if(err){
+    console.log(err)
+  }if(data.username === "" || data.password.length < 4 || data.phonenumber.length <7){
+    res.send("Invalid Input")
+  }else{
+    db.Users.count({username: data.username}, function (err, count){ 
+    if(count>0){
+       res.send("exists") 
+    }else{
+
+    //Now we are saving the the information for the technitian in the database depending on the schema's data-types,
+    //and we going to specify the distance as initial value and it will be changed
+    //depending on technitian's location.
+       db.Users.create({
+          username:data.username,
+          password:hash,
+          phonenumber:data.phonenumber,
+          email:req.body.email
+        },function(err,data){
+          if(err){
+            console.log(err)
+          }
+          res.send(data)
+        })
+      }
+    }); 
+   }
   })
+});
+app.post('/rating', function(req, res){
+  console.log("hi");
+  // db.Technitian.findOne({username: req.body.techname}, function(err, data){
+  //   if (err) {
+  //     console.log(err)
+  //   } else {
+  //     console.log(data.rating)
+  //     res.send(data.rating)
+  //   }
+  // })
+  // db.rate(function(err,result){
+  //   console.log(value);
+  // })
+  res.send("his")
 })
 
 
