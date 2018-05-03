@@ -4,6 +4,7 @@ import $ from 'jquery';
 import Columns from 'react-columns';
 import MechList from './MechList.jsx';
 import OurMap from './OurMap.jsx'; //the map component where we will get the location using Geolocation
+import {Row, Col} from 'react-bootstrap';
 
 
 // Welcome to our Home page! the only page the user will need to get the service
@@ -74,13 +75,14 @@ class Home extends React.Component {
   render () {
    
     
-
     return (<div className="container" style={{'marginTop':'50px'}}>
 
             <div>
+              <Row>
               <div>
               <h1>Home</h1>
-              <div >
+              <div>
+                  <Col md={6}>
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                   <label>Location:</label>
@@ -90,13 +92,18 @@ class Home extends React.Component {
                 </div>
                 <button type="submit" className="btn btn-warning btn-block btn-lg" style={{color:'black', marginBottom: '10px'}}>Get me the nearest mechanics!</button>
               </form>
+              </Col>
               </div>
+              <Col md={6}>
               <div style={{margin: '15px'}}>
               <h4>Choose a mechanic:</h4>
-              <MechList mechs={this.state.mechs} longitude={this.state.longitude} laltitude={this.state.laltitude}/>
+              <MechList className='container' toggle={this.props.toggle} username={this.props.username} setUsername={this.props.setUsername} v = {this.props.v} mechs={this.state.mechs} longitude={this.state.longitude} laltitude={this.state.laltitude}/>
               </div>
-              <OurMap setLngLat={this.setLngLat} longitude={this.state.longitude} laltitude={this.state.laltitude}/>
+              </Col><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+              <center>
+              <OurMap setLngLat={this.setLngLat} longitude={this.state.longitude} laltitude={this.state.laltitude}/></center>
               </div>
+              </Row>
               </div>
             </div>)
   }

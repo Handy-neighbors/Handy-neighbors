@@ -25,12 +25,12 @@ class Intro extends React.Component {
 		 <Row className="show-grid">
 		    <Col md={6}>
 			    <a  href="#/home" style={{textDecoration: 'none'}}>
-							<img style={{'borderRadius': '15px', 'border' : 'solid', 'borderColor' : 'black', borderWidth:'thick'}} src="http://i65.tinypic.com/2jfyx5g.jpg" height="100%" width="100%"/>
+							<img style={{'borderRadius': '15px', 'border' : 'solid', 'borderColor' : 'black', borderWidth:'thick'}} src="https://media.istockphoto.com/vectors/man-standing-near-a-broken-car-vector-id667707884?k=6&m=667707884&s=612x612&w=0&h=NsewTx5vmBivX2PbXfomLO4Ax9fhkchZ2Cetn7VY2no=" height="100%" width="100%"/>
 				</a>
 			</Col>
 			<Col md={6}>
 				<a   href="#/signup" style={{textDecoration: 'none'}}>
-					<img style={{'borderRadius': '15px', 'border' : 'solid', 'borderColor' : 'black', borderWidth:'thick'}} src="http://i65.tinypic.com/35alwr9.jpg" height="100%" width="100%"/>
+					<img style={{'borderRadius': '15px', 'border' : 'solid', 'borderColor' : 'black', borderWidth:'thick'}} src="https://media.istockphoto.com/vectors/auto-mechanic-vector-id495279953?k=6&m=495279953&s=612x612&w=0&h=--8i5pbVdpIKWLUg9PPSXfhrSCja1HVPuBoDUaI8sT8=" height="352px" width="100%"/>
 				</a>
 			</Col>
 		</Row>
