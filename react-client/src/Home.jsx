@@ -14,8 +14,8 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      longitude: 35.8375629,
-      laltitude: 31.9867353,
+      longitude: 0,
+      laltitude: 0,
       mechs: []
     }
    this.handleChangesLongitude = this.handleChangesLongitude.bind(this)
