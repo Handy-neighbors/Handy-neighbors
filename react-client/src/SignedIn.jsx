@@ -29,19 +29,20 @@ handleChanges(event){
 
 	//USing jquery ajax, we send the new service, and recieve back the new list of services
 	handleSubmit(event) {
-		
+		var that=this
+		console.log(this.props.username)
 		$.ajax({
 			type : 'POST',
 			url: '/service',
 			data: {
-				username: this.props.user,
+				username: this.props.username,
 				clientName: this.state.clientName,
 				service: this.state.service,
 				date: this.state.date
 			}, 
 			success: (data) => {
 				console.log(data.services)
-				this.props.setServices(data.services)
+				that.props.setServices(data.services)
 
 			},
 			error: (err) => {
