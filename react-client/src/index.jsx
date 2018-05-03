@@ -100,7 +100,7 @@ class Main extends React.Component {
           <div className="navbar-header">
             <a className="navbar-brand " href="#" style={{color:'#E9AB17'}}>Handy Neighbors</a>
           </div>
-          <ul className="nav navbar-nav  pull-right">
+          <ul className="nav navbar-nav">
             <li><Link to="/">Intro</Link></li>
           </ul>
           <ul className="nav navbar-nav">
