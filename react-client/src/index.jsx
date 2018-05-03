@@ -127,7 +127,7 @@ class Main extends React.Component {
           <div className="navbar-header">
             <a className="navbar-brand " href="#" style={{color:'#E9AB17'}}>Handy Neighbors</a>
           </div>
-          <ul className="nav navbar-nav  pull-right">
+          <ul className="nav navbar-nav">
             <li><Link to="/">Intro</Link></li>
             <li><Link to="/SignedIn">Mechanic Profile </Link></li>
           </ul>
@@ -147,4 +147,3 @@ class Main extends React.Component {
 };
 
 ReactDOM.render(<Main />, document.getElementById('route'));
-
