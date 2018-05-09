@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Map,  Marker,InfoWindow, GoogleApiWrapper} from 'google-maps-react';
+import {Map,  Marker, InfoWindow, GoogleApiWrapper} from 'google-maps-react';
 // This is the map component it get the location of user without even breakin' a sweat , it dynamically finds the location of the user and put a marker on there location.
 //For futher info please read the comments blow && ENJOY ! 
 class OurMap extends Component {
@@ -12,11 +12,16 @@ class OurMap extends Component {
       lng:0,
       //infoWindo in the map component we recomend that you dont change the next three states 
       showingInfoWindow: false,
+
       activeMarker: {},
-      Place: {}
+      Place: {},
+      position:{}
     }
     // binding the getLoc method to "this"
     this.getLoc = this.getLoc.bind(this)
+    this.mapclick = this.mapclick.bind(this);
+    // this.state.lat = this.state.lat.bind(this)
+    // this.state.lng = this.state.lng.bind(this)
   }
 
 
@@ -63,6 +68,18 @@ onMarkerClick(props, marker, e){
       })
     }
   };
+  mapclick(event){
+   this.setState({
+  lat:31.67,
+  lng:31.5465
+})
+this.setState({
+  lat:event.google.maps.LatLng,
+   lng:event.google.maps.LatLng
+})
+console.log(event.google.maps.LatLng;
+console.log(event.google.maps.LatLng);
+ }
   render() {
     return (
         <div> 
@@ -71,11 +88,13 @@ onMarkerClick(props, marker, e){
           {this.getLoc()// calling getLoc here will get your location once you open the app
           }   
 
-            <Map style={{width:"60%",height:"30%"}} google={this.props.google} zoom={7}
-            //the map component which is made thanks to google maps react library 
-                initialCenter={{  lat:31.963158 ,lng:35.930359}}>
+            <Map id='#map' style={{width:"35%",height:"40%", margin: "0px 0px 0px 53px"}} google={this.props.google} zoom={7}
 
-                <Marker position={{lat:this.props.laltitude,lng:this.props.longitude}}
+            //the map component which is made thanks to google maps react library 
+                initialCenter={{  lat:31.963158 ,lng:35.930359}} 
+                onClick={this.mapclick}>
+
+                <Marker position={{lat:this.state.lat,lng:this.state.lng}}
                 // a marker on the map that will show you your current location
                   onClick={this.onMarkerClick} name={"Your locatoin"}
                    />
